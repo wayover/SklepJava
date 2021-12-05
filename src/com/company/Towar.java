@@ -3,14 +3,15 @@ package com.company;
 public class Towar {
 
     String nazwa;
-    float wartosc;
+    double wartosc;
+    int ilosc=0;
 
-    Towar(String nazwa,float wartosc){
+    Towar(String nazwa,double wartosc){
         this.nazwa=nazwa;
         this.wartosc=wartosc;
     }
 
-    public float getWartosc() {
+    public double getWartosc() {
         return wartosc;
     }
 

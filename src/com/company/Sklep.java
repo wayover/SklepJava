@@ -12,30 +12,48 @@ public class Sklep {
     int ile;
 
 
-    List<Towar>towar;
-    Map<Towar,Integer> towary=new HashMap<>();
+    List<Towar>towar= new ArrayList<>();
+    List<Towar>ceny= new ArrayList<>();
 
     Sklep(int ile,List<Towar> towar){
         this.ile=ile;
-        this.towar=towar;
+        Towar temp1;
+        System.out.println(towar.size());
+        for(int i=0;i<towar.size();i++){
+            temp1=new Towar(towar.get(i).nazwa,towar.get(i).wartosc);
+            this.towar.add(temp1);
 
-        for(int i=0;i<towar.size();i++) {
-            towary.put(towar.get(i),0);
         }
+        this.ceny=towar;
+     //   this.towar=towar;
+      //  this.ceny=towar;
+
     }
 
 
     public void dostawa(){
         for(int i=0;i<towar.size();i++) {
-            towary.put(towar.get(i), towary.get(towar.get(i)) + (ile * 45));
+            if(towar.get(i).ilosc>ile * 45){
+                towar.get(i).wartosc=ceny.get(i).wartosc*1.02;
+                towar.get(i).ilosc+=(ile * 45);
+                System.out.println("Ceny wartosć = "+ceny.get(i).wartosc);
+                System.out.println("towar wartosć = "+towar.get(i).wartosc);
+            }else {
+                towar.get(i).wartosc=ceny.get(i).wartosc*1.2;
+                towar.get(i).ilosc+=(ile * 45);
+                System.out.println("Ceny wartosć = "+ceny.get(i).wartosc);
+                System.out.println("towar wartosć = "+towar.get(i).wartosc);
+            }
         }
+
+
     }
 
-
-    public void listatowarow(){
-        for(int i=0;i<towary.size();i++){
-            System.out.println(towar.get(i).nazwa+" - "+towary.get(towar.get(i)));
-        }
+    public List<Towar> getTowar() {
+        return towar;
     }
 
+    public void setTowar(List<Towar> towar) {
+        this.towar = towar;
+    }
 }
