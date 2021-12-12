@@ -11,20 +11,24 @@ int lambdaDni;
 int lambdaSztuki;
 
 Map<Sklep,Integer> sklepy;
+Sklep ktorySklep;
 
-
+Boolean pierwszy=true;
 
 
     Random r = new Random();
 
 
-    Klient(double wiek, Towar towar, double exp,int ilesztuk,int lambdaDni,int lambdaSztuki,List<Sklep> sklepy) {
+    Klient(double wiek, Towar towar,int lambdaDni,int lambdaSztuki,List<Sklep> sklepy) {
         this.wiek = wiek;
         this.towar = towar;
-        this.dni = exp;
-        this.ilesztuk = ilesztuk;
         this.lambdaDni=lambdaDni;
         this.lambdaSztuki=lambdaSztuki;
+        this.dni = getExp(r,lambdaDni);
+        this.ilesztuk = getPoisson(r,lambdaSztuki);
+
+        int sklId= (int) ((Math.random() * (sklepy.size())));
+        ktorySklep= sklepy.get(sklId);
 
 
         Map<Sklep,Integer> tmp=new HashMap<>();
@@ -32,6 +36,18 @@ Map<Sklep,Integer> sklepy;
             tmp.put(sklepy.get(i),5);
         }
         this.sklepy=tmp;
+
+    }
+
+    public void kup(){
+        if(pierwszy==true){
+            pierwszy=false;
+            //Dodać kupowanie przedmiotów
+        }else{
+
+            //Dodać wybór sklepu
+        }
+
 
     }
 

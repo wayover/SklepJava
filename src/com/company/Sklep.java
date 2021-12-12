@@ -18,7 +18,7 @@ public class Sklep {
     Sklep(int ile,List<Towar> towar){
         this.ile=ile;
         Towar temp1;
-        System.out.println(towar.size());
+        //System.out.println(towar.size());
         for(int i=0;i<towar.size();i++){
             temp1=new Towar(towar.get(i).nazwa,towar.get(i).wartosc);
             this.towar.add(temp1);
@@ -36,13 +36,13 @@ public class Sklep {
             if(towar.get(i).ilosc>ile * 45){
                 towar.get(i).wartosc=ceny.get(i).wartosc*1.02;
                 towar.get(i).ilosc+=(ile * 45);
-                System.out.println("Ceny wartosć = "+ceny.get(i).wartosc);
-                System.out.println("towar wartosć = "+towar.get(i).wartosc);
+                //System.out.println("Ceny wartosć = "+ceny.get(i).wartosc);
+                //System.out.println("towar wartosć = "+towar.get(i).wartosc);
             }else {
                 towar.get(i).wartosc=ceny.get(i).wartosc*1.2;
                 towar.get(i).ilosc+=(ile * 45);
-                System.out.println("Ceny wartosć = "+ceny.get(i).wartosc);
-                System.out.println("towar wartosć = "+towar.get(i).wartosc);
+                //System.out.println("Ceny wartosć = "+ceny.get(i).wartosc);
+                //System.out.println("towar wartosć = "+towar.get(i).wartosc);
             }
         }
 
