@@ -1,5 +1,6 @@
 package com.company;
 
+import java.sql.Struct;
 import java.util.*;
 
 public class Main {
@@ -61,6 +62,7 @@ public class Main {
 
 
 
+        List<Kupowanie> kupList=new ArrayList<>();
 
         //pętla idąca po każdym dniu
         System.out.println("Dzień 1");

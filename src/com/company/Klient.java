@@ -3,15 +3,15 @@ package com.company;
 import java.util.*;
 
 public class Klient {
-double wiek;
+int wiek;
 Towar towar;
-double dni;
+Sklep ktorySklep;
+int dni;
 int ilesztuk;
 int lambdaDni;
 int lambdaSztuki;
-
 Map<Sklep,Integer> sklepy;
-Sklep ktorySklep;
+List<Sklep> listSklep;
 
 Boolean pierwszy=true;
 
@@ -20,34 +20,78 @@ Boolean pierwszy=true;
 
 
     Klient(double wiek, Towar towar,int lambdaDni,int lambdaSztuki,List<Sklep> sklepy) {
-        this.wiek = wiek;
+        this.wiek = (int)wiek;
         this.towar = towar;
         this.lambdaDni=lambdaDni;
         this.lambdaSztuki=lambdaSztuki;
-        this.dni = getExp(r,lambdaDni);
+        this.dni = (int)getExp(r,lambdaDni);
         this.ilesztuk = getPoisson(r,lambdaSztuki);
-
+        this.listSklep=sklepy;
         int sklId= (int) ((Math.random() * (sklepy.size())));
         ktorySklep= sklepy.get(sklId);
 
 
         Map<Sklep,Integer> tmp=new HashMap<>();
         for(int i=0;i<sklepy.size();i++){
-            tmp.put(sklepy.get(i),5);
+            tmp.put(sklepy.get(i),3);
         }
         this.sklepy=tmp;
 
     }
 
-    public void kup(){
+
+
+    public Kupowanie kup(){
+
+        List<Double> ocena=new ArrayList<>();
+
         if(pierwszy==true){
+            Kupowanie kup=new Kupowanie(ktorySklep,towar,getPoisson (r, lambdaSztuki),this);
             pierwszy=false;
-            //Dodać kupowanie przedmiotów
+            return kup;
         }else{
 
-            //Dodać wybór sklepu
+            double tmpOcena=0;
+            for (Map.Entry<Sklep, Integer> sklep : sklepy.entrySet()) {
+                tmpOcena=sklep.getValue()*wiek/20;//Ocena sklepu przez klienta(Jeżeli nie był ocenia go na 3). Czym starszy tym rzadziej zmienia dobrze oceniany sklep przez siebie
+                tmpOcena*=sklep.getKey().getSrOcena()*10/wiek;//średnia ocena sklepu przez wszystkich. Czym młodszy tym bardziej to się liczy
+                if(sklep.getKey().czyPromocja(towar)){
+                    tmpOcena*=5;
+                }//Jeżeli sklep ma promocje
+
+                ocena.add(tmpOcena);
+            }
+            int maxOcena=0;
+            for(int i=1;i<ocena.size();i++){
+                if(maxOcena<ocena.get(i)){
+                    ktorySklep=listSklep.get(i);//wybranie sklepu z najwyzsza ocena
+                }
+            }
+
+            Kupowanie kup=new Kupowanie(ktorySklep,towar,getPoisson (r, lambdaSztuki),this);
+            return kup;
         }
 
+
+    }
+
+    public void WystawOcene(int dzien){
+        int ocena=0;
+        int iledni=dzien-dni;
+        if(iledni<2){
+            ocena=5;
+        }else if(iledni<5){
+            ocena=4;
+        }else if(iledni<10){
+            ocena=3;
+        }else if(iledni<15){
+            ocena=2;
+        }else{
+            ocena=1;
+        }
+
+        ktorySklep.wystawOcene(ocena);
+        sklepy.put(ktorySklep,ocena);
 
     }
 
@@ -63,7 +107,7 @@ Boolean pierwszy=true;
         return dni;
     }
 
-    public void setDni(double exp) {
+    public void setDni(int exp) {
         this.dni = exp;
     }
 
